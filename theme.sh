@@ -102,7 +102,7 @@ cmd_apply() {
   local theme
   theme=$(echo "$selected" | sed 's/^. //')
   if [ "$style" = "fixed" ]; then
-    sed "1s|theme = .*|theme = ${theme}|" "$config_file" > "${config_file}.tmp"
+    sed "s|^theme = .*|theme = ${theme}|" "$config_file" > "${config_file}.tmp"
   else
     local theme_value current_light current_dark
     theme_value=$(grep "^theme = " "$config_file" | sed 's/^theme = //')
@@ -114,9 +114,9 @@ cmd_apply() {
       current_dark="$theme_value"
     fi
     if [ "$mode" = "light" ]; then
-      sed "1s|theme = .*|theme = light:${theme},dark:${current_dark}|" "$config_file" > "${config_file}.tmp"
+      sed "s|^theme = .*|theme = light:${theme},dark:${current_dark}|" "$config_file" > "${config_file}.tmp"
     else
-      sed "1s|theme = .*|theme = light:${current_light},dark:${theme}|" "$config_file" > "${config_file}.tmp"
+      sed "s|^theme = .*|theme = light:${current_light},dark:${theme}|" "$config_file" > "${config_file}.tmp"
     fi
   fi
   mv "${config_file}.tmp" "$config_file"

@@ -22,11 +22,11 @@ The `case` block near line 133 dispatches these subcommands and exits early. Eve
 
 ### Config format
 
-The script edits the first `theme = ...` line in the Ghostty config:
+The script edits the `theme = ...` line in the Ghostty config (matched by `^theme = ` pattern, not by line number):
 - Fixed theme: `theme = ThemeName`
 - OS-adaptive: `theme = light:LightTheme,dark:DarkTheme`
 
-`sed` rewrites line 1 of the config in-place via a `.tmp` file.
+`sed` rewrites the matching line in-place via a `.tmp` file.
 
 ### Theme lists
 
