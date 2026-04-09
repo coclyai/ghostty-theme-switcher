@@ -85,13 +85,15 @@ cmd_list() {
   local current
   current=$(get_current_theme "$mode")
   local themes_var="${mode}_themes[@]"
-  printf '%s\n' "${!themes_var}" | sort -u | while IFS= read -r t; do
+  local sorted
+  sorted=$(printf '%s\n' "${!themes_var}" | sort -u)
+  while IFS= read -r t; do
     if [ "$t" = "$current" ]; then
       echo "✓ $t"
     else
       echo "  $t"
     fi
-  done
+  done <<< "$sorted"
 }
 
 # Apply selected theme to config
